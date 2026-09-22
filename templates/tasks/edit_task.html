@@ -1,0 +1,41 @@
+{% extends "tasks/base.html" %}
+
+{% block title %}Edit Task - Hangarin{% endblock %}
+
+{% block content %}
+
+<div class="welcome">
+
+    <div>
+        <h1>Edit Task</h1>
+        <p>Update your task information.</p>
+    </div>
+
+</div>
+
+
+<div class="form-card">
+
+    <form method="post">
+
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <div class="form-buttons">
+
+            <a href="{% url 'task_list' %}" class="cancel-button">
+                Cancel
+            </a>
+
+            <button type="submit" class="add-button">
+                Save Changes
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

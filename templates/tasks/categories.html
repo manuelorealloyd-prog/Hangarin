@@ -1,0 +1,44 @@
+{% extends "tasks/base.html" %}
+
+{% block title %}Categories - Hangarin{% endblock %}
+
+{% block content %}
+
+<div class="welcome">
+
+    <div>
+        <h1>Categories</h1>
+        <p>Organize your tasks by category.</p>
+    </div>
+
+</div>
+
+
+<div class="tasks-section">
+
+    <div class="section-header">
+        <h2>All Categories</h2>
+    </div>
+
+
+    <div class="simple-list">
+
+        {% for category in categories %}
+
+        <div class="simple-card">
+            <span>{{ category.name }}</span>
+        </div>
+
+        {% empty %}
+
+        <div class="empty">
+            <h3>No categories yet</h3>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

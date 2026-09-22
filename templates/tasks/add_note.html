@@ -1,0 +1,41 @@
+{% extends "tasks/base.html" %}
+
+{% block title %}Add Note - Hangarin{% endblock %}
+
+{% block content %}
+
+<div class="welcome">
+
+    <div>
+        <h1>Add Note</h1>
+        <p>Add extra information to one of your tasks.</p>
+    </div>
+
+</div>
+
+
+<div class="form-card">
+
+    <form method="post">
+
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <div class="form-buttons">
+
+            <a href="{% url 'note_list' %}" class="cancel-button">
+                Cancel
+            </a>
+
+            <button type="submit" class="add-button">
+                Add Note
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

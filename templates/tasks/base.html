@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Hangarin{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'tasks/style.css' %}">
+</head>
+
+<body>
+
+    <div class="layout">
+
+        <aside class="sidebar">
+
+            <div class="logo">
+                Hangarin
+            </div>
+
+            <div class="profile">
+                <div class="avatar">A</div>
+
+                <div>
+                    <div class="username">admin</div>
+                    <div class="role">Student</div>
+                </div>
+
+                <span class="arrow">⌄</span>
+            </div>
+
+            <nav class="navigation">
+
+                <a href="{% url 'dashboard' %}" class="nav-item">
+                    <span>◉</span>
+                    Dashboard
+                </a>
+
+                <a href="{% url 'task_list' %}" class="nav-item">
+                    <span>☷</span>
+                    Tasks
+                </a>
+
+                <a href="{% url 'category_list' %}" class="nav-item">
+                    <span>□</span>
+                    Categories
+                </a>
+
+                <a href="{% url 'priority_list' %}" class="nav-item">
+                    <span>☆</span>
+                    Priorities
+                </a>
+
+                <a href="{% url 'note_list' %}" class="nav-item">
+                    <span>♧</span>
+                    Notes
+                </a>
+
+            </nav>
+
+        </aside>
+
+
+        <main class="main">
+
+            <header class="topbar">
+
+                <div class="search">
+                    <input type="text" placeholder="Search...">
+                    <span>⌕</span>
+                </div>
+
+                <div class="top-right">
+                    <span class="icon">✉</span>
+                    <span class="icon">♧</span>
+
+                    <div class="top-user">
+                        <div class="avatar small">A</div>
+                        <span>admin</span>
+                        <span>⌄</span>
+                    </div>
+                </div>
+
+            </header>
+
+
+            <section class="content">
+
+                {% block content %}
+
+                <h1>Home</h1>
+
+                <div class="card">
+
+                    <h2>Welcome to Hangarin</h2>
+
+                    <p>
+                        Manage your tasks, priorities, categories, and notes.
+                    </p>
+
+                </div>
+
+                {% endblock %}
+
+            </section>
+
+
+            <footer>
+                <span>Hangarin</span>
+                <span>Task & To-Do Manager</span>
+                <span>2026 Hangarin</span>
+            </footer>
+
+        </main>
+
+    </div>
+
+</body>
+</html>

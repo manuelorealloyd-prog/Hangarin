@@ -1,0 +1,44 @@
+{% extends "tasks/base.html" %}
+
+{% block title %}Priorities - Hangarin{% endblock %}
+
+{% block content %}
+
+<div class="welcome">
+
+    <div>
+        <h1>Priorities</h1>
+        <p>View the priority levels used by your tasks.</p>
+    </div>
+
+</div>
+
+
+<div class="tasks-section">
+
+    <div class="section-header">
+        <h2>All Priorities</h2>
+    </div>
+
+
+    <div class="simple-list">
+
+        {% for priority in priorities %}
+
+        <div class="simple-card">
+            <span>{{ priority.name }}</span>
+        </div>
+
+        {% empty %}
+
+        <div class="empty">
+            <h3>No priorities yet</h3>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}
