@@ -17,16 +17,26 @@
                 Hangarin
             </div>
 
-            <div class="profile">
-                <div class="avatar">A</div>
+            <details class="profile">
+                <summary>
+                    <div class="avatar">
+                        {{ user.username|first|upper }}
+                    </div>
 
-                <div>
-                    <div class="username">admin</div>
-                    <div class="role">Student</div>
+                    <div>
+                        <div class="username">{{ user.username }}</div>
+                        <div class="role">Student</div>
+                    </div>
+
+                    <span class="arrow">⌄</span>
+                </summary>
+
+                <div class="account-menu">
+                    <a href="{% url 'logout' %}">
+                        Logout
+                    </a>
                 </div>
-
-                <span class="arrow">⌄</span>
-            </div>
+            </details>
 
             <nav class="navigation">
 
@@ -64,20 +74,46 @@
 
             <header class="topbar">
 
-                <div class="search">
-                    <input type="text" placeholder="Search...">
-                    <span>⌕</span>
-                </div>
+                <form class="search" method="get" action="{% url 'task_list' %}">
+                    <input
+                        type="text"
+                        name="q"
+                        placeholder="Search tasks..."
+                        value="{{ search }}"
+                    >
+                    <button type="submit">⌕</button>
+                </form>
 
                 <div class="top-right">
-                    <span class="icon">✉</span>
-                    <span class="icon">♧</span>
 
-                    <div class="top-user">
-                        <div class="avatar small">A</div>
-                        <span>admin</span>
-                        <span>⌄</span>
-                    </div>
+                    <a href="{% url 'activity_list' %}" class="icon activity-icon">
+                        ✉
+                    </a>
+
+                    <span class="icon">
+                        ♧
+                    </span>
+
+                    <details class="top-user">
+
+                        <summary>
+                            <div class="avatar small">
+                                {{ user.username|first|upper }}
+                            </div>
+
+                            <span>{{ user.username }}</span>
+
+                            <span>⌄</span>
+                        </summary>
+
+                        <div class="top-account-menu">
+                            <a href="{% url 'logout' %}">
+                                Logout
+                            </a>
+                        </div>
+
+                    </details>
+
                 </div>
 
             </header>

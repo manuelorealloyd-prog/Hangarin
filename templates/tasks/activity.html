@@ -1,0 +1,47 @@
+{% extends "tasks/base.html" %}
+
+{% block title %}Activity - Hangarin{% endblock %}
+
+{% block content %}
+
+<div class="welcome">
+    <div>
+        <h1>Activity</h1>
+        <p>Recent changes made in Hangarin.</p>
+    </div>
+</div>
+
+<div class="tasks-section">
+
+    <div class="section-header">
+        <h2>Recent Activity</h2>
+    </div>
+
+    <div class="simple-list">
+
+        {% for activity in activities %}
+
+        <div class="simple-card">
+            <div>
+                <strong>{{ activity.message }}</strong>
+            </div>
+
+            <small>
+                {{ activity.created_at|date:"M d, Y - h:i A" }}
+            </small>
+        </div>
+
+        {% empty %}
+
+        <div class="empty">
+            <h3>No activity yet</h3>
+            <p>Changes you make will appear here.</p>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

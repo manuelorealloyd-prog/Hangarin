@@ -78,3 +78,15 @@ class Note(BaseModel):
 
     def __str__(self):
         return self.content[:50]
+
+
+class Activity(models.Model):
+    user = models.ForeignKey(
+        "auth.User",
+        on_delete=models.CASCADE
+    )
+    message = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.message

@@ -5,21 +5,21 @@
 {% block content %}
 
 <div class="welcome">
-
     <div>
         <h1>Priorities</h1>
-        <p>View the priority levels used by your tasks.</p>
+        <p>Manage the priority levels used by your tasks.</p>
     </div>
 
+    <a href="{% url 'add_priority' %}" class="add-button">
+        + Add Priority
+    </a>
 </div>
-
 
 <div class="tasks-section">
 
     <div class="section-header">
         <h2>All Priorities</h2>
     </div>
-
 
     <div class="simple-list">
 
