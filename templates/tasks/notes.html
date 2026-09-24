@@ -5,7 +5,6 @@
 {% block content %}
 
 <div class="welcome">
-
     <div>
         <h1>Notes</h1>
         <p>View notes connected to your tasks.</p>
@@ -14,9 +13,7 @@
     <a href="{% url 'add_note' %}" class="add-button">
         + Add Note
     </a>
-
 </div>
-
 
 <div class="tasks-section">
 
@@ -24,31 +21,37 @@
         <h2>All Notes</h2>
     </div>
 
-
     <div class="simple-list">
 
         {% for note in notes %}
 
         <div class="note-card">
 
-            <h3>{{ note.task.title }}</h3>
+            <div>
+                <h3>{{ note.task.title }}</h3>
 
-            <p>{{ note.content }}</p>
+                <p>{{ note.content }}</p>
 
-            <small>
-                {{ note.created_at|date:"M d, Y" }}
-            </small>
+                <small>
+                    {{ note.created_at|date:"M d, Y" }}
+                </small>
+            </div>
+
+            <form method="post" action="{% url 'delete_note' note.id %}">
+                {% csrf_token %}
+
+                <button type="submit" class="delete-button">
+                    Delete
+                </button>
+            </form>
 
         </div>
 
         {% empty %}
 
         <div class="empty">
-
             <h3>No notes yet</h3>
-
             <p>Add a note to one of your tasks.</p>
-
         </div>
 
         {% endfor %}

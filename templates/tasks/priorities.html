@@ -5,6 +5,7 @@
 {% block content %}
 
 <div class="welcome">
+
     <div>
         <h1>Priorities</h1>
         <p>Manage the priority levels used by your tasks.</p>
@@ -13,6 +14,7 @@
     <a href="{% url 'add_priority' %}" class="add-button">
         + Add Priority
     </a>
+
 </div>
 
 <div class="tasks-section">
@@ -26,7 +28,18 @@
         {% for priority in priorities %}
 
         <div class="simple-card">
+
             <span>{{ priority.name }}</span>
+
+            <form method="post" action="{% url 'delete_priority' priority.id %}">
+                {% csrf_token %}
+
+                <button type="submit" class="delete-button">
+                    Delete
+                </button>
+
+            </form>
+
         </div>
 
         {% empty %}

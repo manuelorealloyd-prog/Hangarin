@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
+from django.db.models import ProtectedError
 from .models import Task, Category, Priority, Note, Activity
 from .forms import TaskForm, NoteForm, LoginForm, CategoryForm, PriorityForm
 
@@ -44,7 +45,6 @@ def dashboard(request):
 @login_required(login_url="login")
 def task_list(request):
     search = request.GET.get("q", "")
-
     tasks = Task.objects.all().order_by("-created_at")
 
     if search:
@@ -52,7 +52,7 @@ def task_list(request):
 
     return render(request, "tasks/tasks.html", {
         "tasks": tasks,
-        "search": search,
+        "search": search
     })
 
 
@@ -97,7 +97,7 @@ def edit_task(request, task_id):
 
     return render(request, "tasks/edit_task.html", {
         "form": form,
-        "task": task,
+        "task": task
     })
 
 
@@ -140,6 +140,23 @@ def add_note(request):
 
 
 @login_required(login_url="login")
+def delete_note(request, note_id):
+    note = get_object_or_404(Note, id=note_id)
+
+    if request.method == "POST":
+        task_title = note.task.title
+
+        note.delete()
+
+        Activity.objects.create(
+            user=request.user,
+            message=f'Deleted a note from "{task_title}"'
+        )
+
+    return redirect("note_list")
+
+
+@login_required(login_url="login")
 def category_list(request):
     categories = Category.objects.all().order_by("name")
 
@@ -165,9 +182,28 @@ def add_category(request):
     else:
         form = CategoryForm()
 
-    return render(request, "tasks/add_category.html", {
-        "form": form
-    })
+    return render(request, "tasks/add_category.html", {"form": form})
+
+
+@login_required(login_url="login")
+def delete_category(request, category_id):
+    category = get_object_or_404(Category, id=category_id)
+
+    if request.method == "POST":
+        category_name = category.name
+
+        try:
+            category.delete()
+
+            Activity.objects.create(
+                user=request.user,
+                message=f'Deleted category "{category_name}"'
+            )
+
+        except ProtectedError:
+            pass
+
+    return redirect("category_list")
 
 
 @login_required(login_url="login")
@@ -196,9 +232,28 @@ def add_priority(request):
     else:
         form = PriorityForm()
 
-    return render(request, "tasks/add_priority.html", {
-        "form": form
-    })
+    return render(request, "tasks/add_priority.html", {"form": form})
+
+
+@login_required(login_url="login")
+def delete_priority(request, priority_id):
+    priority = get_object_or_404(Priority, id=priority_id)
+
+    if request.method == "POST":
+        priority_name = priority.name
+
+        try:
+            priority.delete()
+
+            Activity.objects.create(
+                user=request.user,
+                message=f'Deleted priority "{priority_name}"'
+            )
+
+        except ProtectedError:
+            pass
+
+    return redirect("priority_list")
 
 
 @login_required(login_url="login")

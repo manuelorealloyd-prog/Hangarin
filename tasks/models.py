@@ -40,14 +40,10 @@ class Task(BaseModel):
 
     title = models.CharField(max_length=200)
     description = models.TextField()
-    status = models.CharField(
-        max_length=50,
-        choices=STATUS_CHOICES,
-        default="Pending"
-    )
+    status = models.CharField(max_length=50, choices=STATUS_CHOICES, default="Pending")
     deadline = models.DateTimeField()
-    priority = models.ForeignKey(Priority, on_delete=models.CASCADE)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    priority = models.ForeignKey(Priority, on_delete=models.PROTECT)
+    category = models.ForeignKey(Category, on_delete=models.PROTECT)
 
     def __str__(self):
         return self.title
@@ -61,11 +57,7 @@ class SubTask(BaseModel):
     ]
 
     title = models.CharField(max_length=200)
-    status = models.CharField(
-        max_length=50,
-        choices=STATUS_CHOICES,
-        default="Pending"
-    )
+    status = models.CharField(max_length=50, choices=STATUS_CHOICES, default="Pending")
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -81,10 +73,7 @@ class Note(BaseModel):
 
 
 class Activity(models.Model):
-    user = models.ForeignKey(
-        "auth.User",
-        on_delete=models.CASCADE
-    )
+    user = models.ForeignKey("auth.User", on_delete=models.CASCADE)
     message = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
 

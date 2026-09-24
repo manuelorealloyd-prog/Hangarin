@@ -14,6 +14,9 @@ from .views import (
     add_category,
     add_priority,
     activity_list,
+    delete_note,
+    delete_category,
+    delete_priority,
 )
 
 urlpatterns = [
@@ -31,10 +34,13 @@ urlpatterns = [
 
     path("tasks/add/", add_task, name="add_task"),
     path("notes/add/", add_note, name="add_note"),
-
     path("categories/add/", add_category, name="add_category"),
     path("priorities/add/", add_priority, name="add_priority"),
 
     path("tasks/edit/<int:task_id>/", edit_task, name="edit_task"),
     path("tasks/delete/<int:task_id>/", delete_task, name="delete_task"),
+
+    path("notes/delete/<int:note_id>/", delete_note, name="delete_note"),
+    path("categories/delete/<int:category_id>/", delete_category, name="delete_category"),
+    path("priorities/delete/<int:priority_id>/", delete_priority, name="delete_priority"),
 ]
