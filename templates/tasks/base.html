@@ -3,152 +3,211 @@
 <head>
     <title>{% block title %}Hangarin{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     {% load static %}
+    {% load activity_tags %}
+
     <link rel="stylesheet" href="{% static 'tasks/style.css' %}">
 </head>
 
 <body>
 
-    <div class="layout">
+<div class="layout">
 
-        <aside class="sidebar">
+    <aside class="sidebar">
 
-            <div class="logo">
-                Hangarin
+        <div class="logo">
+            Hangarin
+        </div>
+
+        <details class="profile">
+
+            <summary>
+
+                <div class="avatar">
+                    {{ user.username|first|upper }}
+                </div>
+
+                <div>
+                    <div class="username">
+                        {{ user.username }}
+                    </div>
+
+                    <div class="role">
+                        Student
+                    </div>
+                </div>
+
+                <span class="arrow">
+                    ⌄
+                </span>
+
+            </summary>
+
+            <div class="account-menu">
+
+                <a href="{% url 'logout' %}" class="logout-option">
+                    <span>↪</span>
+                    Logout
+                </a>
+
             </div>
 
-            <details class="profile">
-                <summary>
-                    <div class="avatar">
-                        {{ user.username|first|upper }}
-                    </div>
+        </details>
 
-                    <div>
-                        <div class="username">{{ user.username }}</div>
-                        <div class="role">Student</div>
-                    </div>
+        <nav class="navigation">
 
-                    <span class="arrow">⌄</span>
-                </summary>
+            <a href="{% url 'dashboard' %}" class="nav-item">
+                <span>◉</span>
+                Dashboard
+            </a>
 
-                <div class="account-menu">
-                    <a href="{% url 'logout' %}">
-                        Logout
-                    </a>
-                </div>
-            </details>
+            <a href="{% url 'task_list' %}" class="nav-item">
+                <span>✓</span>
+                Tasks
+            </a>
 
-            <nav class="navigation">
+            <a href="{% url 'category_list' %}" class="nav-item">
+                <span>▦</span>
+                Categories
+            </a>
 
-                <a href="{% url 'dashboard' %}" class="nav-item">
-                    <span>◉</span>
-                    Dashboard
+            <a href="{% url 'priority_list' %}" class="nav-item">
+                <span>⚑</span>
+                Priorities
+            </a>
+
+            <a href="{% url 'note_list' %}" class="nav-item">
+                <span>✎</span>
+                Notes
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <form class="search" method="get" action="{% url 'task_list' %}">
+
+                <input
+                    type="text"
+                    name="q"
+                    placeholder="Search tasks..."
+                    value="{{ search }}"
+                >
+
+                <button type="submit">
+                    ⌕
+                </button>
+
+            </form>
+
+
+            <div class="top-right">
+
+                <a href="{% url 'activity_list' %}" class="icon activity-icon">
+
+                    ✉
+
+                    {% unread_activity as has_unread %}
+
+                    {% if has_unread %}
+                        <span class="activity-badge">
+                            !
+                        </span>
+                    {% endif %}
+
                 </a>
 
-                <a href="{% url 'task_list' %}" class="nav-item">
-                    <span>☷</span>
-                    Tasks
-                </a>
 
-                <a href="{% url 'category_list' %}" class="nav-item">
-                    <span>□</span>
-                    Categories
-                </a>
+                <details class="top-user">
 
-                <a href="{% url 'priority_list' %}" class="nav-item">
-                    <span>☆</span>
-                    Priorities
-                </a>
+                    <summary>
 
-                <a href="{% url 'note_list' %}" class="nav-item">
-                    <span>♧</span>
-                    Notes
-                </a>
-
-            </nav>
-
-        </aside>
-
-
-        <main class="main">
-
-            <header class="topbar">
-
-                <form class="search" method="get" action="{% url 'task_list' %}">
-                    <input
-                        type="text"
-                        name="q"
-                        placeholder="Search tasks..."
-                        value="{{ search }}"
-                    >
-                    <button type="submit">⌕</button>
-                </form>
-
-                <div class="top-right">
-
-                    <a href="{% url 'activity_list' %}" class="icon activity-icon">
-                        ✉
-                    </a>
-
-                    <span class="icon">
-                        ♧
-                    </span>
-
-                    <details class="top-user">
-
-                        <summary>
-                            <div class="avatar small">
-                                {{ user.username|first|upper }}
-                            </div>
-
-                            <span>{{ user.username }}</span>
-
-                            <span>⌄</span>
-                        </summary>
-
-                        <div class="top-account-menu">
-                            <a href="{% url 'logout' %}">
-                                Logout
-                            </a>
+                        <div class="avatar small">
+                            {{ user.username|first|upper }}
                         </div>
 
-                    </details>
+                        <span>
+                            {{ user.username }}
+                        </span>
 
-                </div>
+                        <span>
+                            ⌄
+                        </span>
 
-            </header>
-
-
-            <section class="content">
-
-                {% block content %}
-
-                <h1>Home</h1>
-
-                <div class="card">
-
-                    <h2>Welcome to Hangarin</h2>
-
-                    <p>
-                        Manage your tasks, priorities, categories, and notes.
-                    </p>
-
-                </div>
-
-                {% endblock %}
-
-            </section>
+                    </summary>
 
 
-            <footer>
-                <span>Hangarin</span>
-                <span>Task & To-Do Manager</span>
-                <span>2026 Hangarin</span>
-            </footer>
+                    <div class="top-account-menu">
 
-        </main>
+                        <a href="{% url 'logout' %}" class="logout-option">
 
-    </div>
+                            <span>
+                                ↪
+                            </span>
+
+                            Logout
+
+                        </a>
+
+                    </div>
+
+                </details>
+
+            </div>
+
+        </header>
+
+
+        <section class="content">
+
+            {% block content %}
+
+            <h1>
+                Home
+            </h1>
+
+            <div class="card">
+
+                <h2>
+                    Welcome to Hangarin
+                </h2>
+
+                <p>
+                    Manage your tasks, priorities, categories, and notes.
+                </p>
+
+            </div>
+
+            {% endblock %}
+
+        </section>
+
+
+        <footer>
+
+            <span>
+                Hangarin
+            </span>
+
+            <span>
+                Task & To-Do Manager
+            </span>
+
+            <span>
+                2026 Hangarin
+            </span>
+
+        </footer>
+
+    </main>
+
+</div>
 
 </body>
 </html>

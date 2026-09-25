@@ -271,6 +271,34 @@ def activity_list(request):
         user=request.user
     ).order_by("-created_at")
 
+    latest_activity = activities.first()
+
+    if latest_activity:
+        request.session["activity_seen_id"] = latest_activity.id
+
     return render(request, "tasks/activity.html", {
         "activities": activities
     })
+
+
+@login_required(login_url="login")
+def delete_activity(request, activity_id):
+    activity = get_object_or_404(
+        Activity,
+        id=activity_id,
+        user=request.user
+    )
+
+    if request.method == "POST":
+        activity.delete()
+
+    return redirect("activity_list")
+
+
+@login_required(login_url="login")
+def clear_activities(request):
+    if request.method == "POST":
+        Activity.objects.filter(user=request.user).delete()
+        request.session["activity_seen_id"] = 0
+
+    return redirect("activity_list")

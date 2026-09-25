@@ -9,6 +9,15 @@
         <h1>Activity</h1>
         <p>Recent changes made in Hangarin.</p>
     </div>
+
+    {% if activities %}
+    <form method="post" action="{% url 'clear_activities' %}">
+        {% csrf_token %}
+        <button type="submit" class="delete-button">
+            Clear All
+        </button>
+    </form>
+    {% endif %}
 </div>
 
 <div class="tasks-section">
@@ -21,14 +30,23 @@
 
         {% for activity in activities %}
 
-        <div class="simple-card">
-            <div>
+        <div class="simple-card activity-card">
+
+            <div class="activity-info">
                 <strong>{{ activity.message }}</strong>
+
+                <small>
+                    {{ activity.created_at|date:"M d, Y - h:i A" }}
+                </small>
             </div>
 
-            <small>
-                {{ activity.created_at|date:"M d, Y - h:i A" }}
-            </small>
+            <form method="post" action="{% url 'delete_activity' activity.id %}">
+                {% csrf_token %}
+                <button type="submit" class="delete-button">
+                    Delete
+                </button>
+            </form>
+
         </div>
 
         {% empty %}

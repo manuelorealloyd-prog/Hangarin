@@ -810,3 +810,39 @@ details summary::-webkit-details-marker {
 .delete-button:hover {
     background: #543237;
 }
+
+.activity-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.activity-info small {
+    display: block;
+    margin-top: 6px;
+    color: #777d85;
+}
+
+.activity-icon {
+    position: relative;
+    text-decoration: none;
+    color: inherit;
+}
+
+.activity-badge {
+    position: absolute;
+    top: -7px;
+    right: -9px;
+    width: 17px;
+    height: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ef4444;
+    color: white;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 1;
+}
